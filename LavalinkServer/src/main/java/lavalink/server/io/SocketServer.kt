@@ -67,6 +67,7 @@ class SocketServer(
             json.put("op", "playerUpdate")
             json.put("guildId", player.guildId)
             json.put("state", player.state)
+            json.put("isPlaying", player.isPlaying)
 
             socketContext.send(json)
         }
@@ -154,6 +155,7 @@ class SocketServer(
             "destroy"           -> handlers.destroy(session, json)
             "configureResuming" -> handlers.configureResuming(session, json)
             "equalizer"         -> handlers.equalizer(session, json)
+            "isPlaying"         -> handlers.isPlaying(session, json)
             else                -> log.warn("Unexpected operation: " + json.getString("op"))
             // @formatter:on
         }

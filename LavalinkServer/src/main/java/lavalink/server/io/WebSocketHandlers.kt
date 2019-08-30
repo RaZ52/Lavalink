@@ -125,4 +125,10 @@ class WebSocketHandlers(private val contextMap: Map<String, SocketContext>) {
         socketContext.resumeKey = json.optString("key", null)
         if (json.has("timeout")) socketContext.resumeTimeout = json.getLong("timeout")
     }
+
+    fun isPlaying(session: WebSocketSession, json: JSONObject) {
+        val context = contextMap[session.id]!!
+        val player = context.getPlayer(json.getString("guildId"))
+        SocketServer.sendPlayerUpdate(context, player)
+    }
 }
